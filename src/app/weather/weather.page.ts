@@ -22,6 +22,7 @@ export class WeatherPage implements OnInit {
     url: "https://api.openweathermap.org/data/2.5/weather?"
   }
   searchResult: any = [];
+  description: string = "";
 
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
@@ -38,7 +39,8 @@ export class WeatherPage implements OnInit {
     console.log(this.options.url);
     let result  = await this.mhs.get(this.options);
     this.searchResult = result.data;
-    console.log(this.searchResult.weather);
+    this.description = this.searchResult.weather[0].description;
+    console.log(this.description);
   }
 
 }
