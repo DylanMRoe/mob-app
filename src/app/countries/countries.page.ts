@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonCard,
 import { DataService } from '../services/data.service';
 import { MyHttpService } from '../services/my-http.service';
 import { HttpOptions } from '@capacitor/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-countries',
@@ -21,7 +22,7 @@ export class CountriesPage implements OnInit {
   };
   searchResult: any = [];
 
-  constructor(private ds: DataService, private mhs: MyHttpService) { }
+  constructor(private ds: DataService, private mhs: MyHttpService, private router: Router) { }
 
   ngOnInit() {
     this.getSearchName();
@@ -34,4 +35,7 @@ export class CountriesPage implements OnInit {
     this.searchResult = result.data;
   }
 
+  async selectedCountryNews(selectedCountryCCA2: string){
+    await this.ds.set("selectedCountryCCA2", selectedCountryCCA2);
+  }
 }
