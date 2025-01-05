@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonCardSubtitle, IonButton } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
 import { MyHttpService } from '../services/my-http.service';
 import { HttpOptions } from '@capacitor/core';
@@ -11,7 +11,7 @@ import { HttpOptions } from '@capacitor/core';
   templateUrl: './countries.page.html',
   styleUrls: ['./countries.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonButton, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCardContent, IonCard, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class CountriesPage implements OnInit {
 
@@ -19,6 +19,7 @@ export class CountriesPage implements OnInit {
   options: HttpOptions = {
     url: "https://restcountries.com/v3.1/name/"
   };
+  searchResult: any = [];
 
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
@@ -29,7 +30,8 @@ export class CountriesPage implements OnInit {
   async getSearchName(){
     this.searchName = await this.ds.get("searchName");
     this.options.url = this.options.url.concat(this.searchName);
-    this.mhs.get(this.options);
+    let result  = await this.mhs.get(this.options);
+    this.searchResult = result.data;
   }
 
 }

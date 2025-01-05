@@ -5,9 +5,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Countries</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list *ngFor="let country of searchResult">
+    <ion-card>
+      <img src="{{country.flags.png}}" />
+      <ion-card-header>
+        <ion-card-title>{{country.name.common}}</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-button>News</ion-button>
+        <ion-button>Weather</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
