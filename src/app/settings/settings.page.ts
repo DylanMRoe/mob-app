@@ -11,7 +11,7 @@ import { DataService } from '../services/data.service';
   imports: [IonRadioGroup, IonRadio, IonItem, IonCheckbox, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class SettingsPage implements OnInit {
-  selectedValue: string = "Metric";
+  selectedValue: string = "";
 
   constructor(private ds: DataService) { }
 
@@ -19,28 +19,19 @@ export class SettingsPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log(this.getValue);
-    if(this.ds.get("Unit") == null){
-      this.selectedValue = "Metric";
-      this.ds.set("Unit", this.selectedValue);
-    }
-    else{
-      this.setValue();
-    }
-
-    document.getElementById("radioGroup")?.setAttribute("value", this.selectedValue);
-  }
-
-  async getValue(){
-    return await this.ds.get("Unit")
+    this.setValue();
   }
 
   async setValue(){
-    this.selectedValue = await this.ds.get("Unit");
+    this.selectedValue =  await this.ds.get("Unit");
+    console.log(this.selectedValue);
+    document.getElementById("radioGroup")?.setAttribute("value", this.selectedValue);
   }
 
-  unitChange(value: string){
+  async unitChange(value: string){
     this.selectedValue = value;
-    this.ds.set("Unit", this.selectedValue);
+    await this.ds.set("Unit", this.selectedValue);
+    console.log("Local " + this.selectedValue);
+    console.log("Storage " + await this.ds.get("Unit"));
   }
 }
