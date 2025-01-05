@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-radio-group value="Metric">
-    <ion-radio value="Metric" (ionSelect) = "unitChange()">Metric</ion-radio><br />
-    <ion-radio value="Standard" (ionSelect) = "unitChange()">Standard</ion-radio><br />
-    <ion-radio value="Imperial"(ionSelect) = "unitChange()">Imperial</ion-radio>
+  <ion-radio-group value="Metric" (ionChange) = "unitChange($event.detail.value)">
+    <ion-radio value="Metric">Metric</ion-radio><br />
+    <ion-radio value="Standard">Standard</ion-radio><br />
+    <ion-radio value="Imperial">Imperial</ion-radio>
   </ion-radio-group>
 </ion-content>

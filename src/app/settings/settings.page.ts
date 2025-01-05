@@ -16,8 +16,7 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
-  unitChange(){
-    console.log("Working");
+  unitChange(value: string){
+    console.log(value);
   }
-
 }
