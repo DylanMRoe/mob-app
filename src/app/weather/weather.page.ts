@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
 import { MyHttpService } from '../services/my-http.service';
 import { HttpOptions } from '@capacitor/core';
@@ -11,7 +11,7 @@ import { HttpOptions } from '@capacitor/core';
   templateUrl: './weather.page.html',
   styleUrls: ['./weather.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class WeatherPage implements OnInit {
   latitude: string = "";
@@ -21,6 +21,7 @@ export class WeatherPage implements OnInit {
   options: HttpOptions = {
     url: "https://api.openweathermap.org/data/2.5/weather?"
   }
+  searchResult: any = [];
 
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
@@ -35,6 +36,9 @@ export class WeatherPage implements OnInit {
     this.options.url = this.options.url.concat("lat=" + this.latitude + "&lon=" + this.longitude + "&units=" + this.unit + 
       "&appid=" + this.apiKey);
     console.log(this.options.url);
+    let result  = await this.mhs.get(this.options);
+    this.searchResult = result.data;
+    console.log(this.searchResult.weather);
   }
 
 }
