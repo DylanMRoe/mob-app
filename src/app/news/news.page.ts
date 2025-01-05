@@ -26,21 +26,28 @@ export class NewsPage implements OnInit {
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
   ngOnInit() {
-    this.getCca2Code();
   }
 
   ionViewWillEnter(){
-
+    this.pageSetUp();
   }
 
   async getCca2Code(){
     this.cca2Code = await this.ds.get("selectedCountryCCA2");
+    
+  }
+
+  async request(){
+    await this.getCca2Code();
     this.options.url = this.options.url.concat(this.cca2Code);
-    console.log(this.options.url);
-    let result  = await this.mhs.get(this.options);
+    return await this.mhs.get(this.options);
+  }
+
+  async pageSetUp(){
+    let result = await this.request();
+
     this.searchResult = result.data.results;
     this.searchStatus = result.data.status;
-    console.log(this.searchStatus);
     this.countryName = await this.ds.get("selectedCountryName");
   }
 }

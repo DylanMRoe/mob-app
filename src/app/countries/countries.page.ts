@@ -25,15 +25,22 @@ export class CountriesPage implements OnInit {
   constructor(private ds: DataService, private mhs: MyHttpService, private router: Router) { }
 
   ngOnInit() {
-    this.getSearchName();
+    this.pageSetUp();
   }
 
-  async getSearchName(){
+  async setSearchName(){
     this.searchName = await this.ds.get("searchName");
+  }
+
+  async request(){
+    await this.setSearchName();
     this.options.url = this.options.url.concat(this.searchName);
-    let result  = await this.mhs.get(this.options);
+    return await this.mhs.get(this.options);
+  }
+
+  async pageSetUp(){
+    let result:any = await this.request();
     this.searchResult = result.data;
-    console.log(this.options.url);
   }
 
   async selectedCountryNews(selectedCountryCCA2: string, selectedCountryName: string){
@@ -43,11 +50,9 @@ export class CountriesPage implements OnInit {
   }
 
   async selectedCountryWeather(LatLongArray: number[], capital: string){
-    console.log(capital);
     await this.ds.set("selectedCountryCapital", capital);
     await this.ds.set("selectedCountryLatitude", LatLongArray[0]);
     await this.ds.set("selectedCountryLongitude", LatLongArray[1]);
     this.router.navigate(['/weather']);
-    console.log("Latitude and Longitude: " + LatLongArray[0] + LatLongArray[1]);
   }
 }

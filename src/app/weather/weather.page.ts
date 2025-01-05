@@ -31,27 +31,33 @@ export class WeatherPage implements OnInit {
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
   ngOnInit() {
-    this.getLatLong();
+    this.pageSetUp();
   }
 
-  async getLatLong(){
+  async readStorage(){
     this.latitude = await this.ds.get("selectedCountryLatitude");
     this.longitude = await this.ds.get("selectedCountryLongitude");
     this.unit = await this.ds.get("Unit");
     this.capital = await this.ds.get("selectedCountryCapital");
+  }
+
+  async request(){
+    await this.readStorage();
     this.options.url = this.options.url.concat("lat=" + this.latitude + "&lon=" + this.longitude + "&units=" + this.unit + 
       "&appid=" + this.apiKey);
-    console.log(this.options.url);
-    let result  = await this.mhs.get(this.options);
+    return await this.mhs.get(this.options);
+
+    
+  }
+
+  async pageSetUp(){
+    let result: any = await this.request()
+
     this.searchResult = result.data;
     this.temperature = this.searchResult.main.temp;
     this.description = this.searchResult.weather[0].description;
     let iconCode: string = this.searchResult.weather[0].icon;
     this.weatherIconURL = this.weatherIconURL.concat(iconCode + ".png");
-    console.log(this.weatherIconURL);
-    console.log(iconCode);
-    console.log(this.description);
-    console.log(this.temperature);
   }
 
 }
