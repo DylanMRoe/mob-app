@@ -20,6 +20,8 @@ export class NewsPage implements OnInit {
     url: "https://newsdata.io/api/1/latest?apikey=" + this.apiKey + "&country="
   }
   searchResult: any = [];
+  searchStatus: string = "";
+  countryName: string = "";
 
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
@@ -27,12 +29,18 @@ export class NewsPage implements OnInit {
     this.getCca2Code();
   }
 
+  ionViewWillEnter(){
+
+  }
+
   async getCca2Code(){
     this.cca2Code = await this.ds.get("selectedCountryCCA2");
     this.options.url = this.options.url.concat(this.cca2Code);
+    console.log(this.options.url);
     let result  = await this.mhs.get(this.options);
     this.searchResult = result.data.results;
-    console.log(JSON.stringify(this.searchResult));
+    this.searchStatus = result.data.status;
+    console.log(this.searchStatus);
+    this.countryName = await this.ds.get("selectedCountryName");
   }
-
 }

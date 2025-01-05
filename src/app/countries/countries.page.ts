@@ -36,8 +36,9 @@ export class CountriesPage implements OnInit {
     console.log(this.options.url);
   }
 
-  async selectedCountryNews(selectedCountryCCA2: string){
+  async selectedCountryNews(selectedCountryCCA2: string, selectedCountryName: string){
     await this.ds.set("selectedCountryCCA2", selectedCountryCCA2);
+    await this.ds.set("selectedCountryName", selectedCountryName);
     this.router.navigate(['/news']);
   }
 
