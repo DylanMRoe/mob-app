@@ -23,6 +23,7 @@ export class WeatherPage implements OnInit {
   }
   searchResult: any = [];
   description: string = "";
+  temperature: string = "";
 
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
@@ -39,8 +40,10 @@ export class WeatherPage implements OnInit {
     console.log(this.options.url);
     let result  = await this.mhs.get(this.options);
     this.searchResult = result.data;
+    this.temperature = this.searchResult.main.temp;
     this.description = this.searchResult.weather[0].description;
     console.log(this.description);
+    console.log(this.temperature);
   }
 
 }
