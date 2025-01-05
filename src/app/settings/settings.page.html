@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-radio-group value="Metric" (ionChange) = "unitChange($event.detail.value)">
-    <ion-radio value="Metric">Metric</ion-radio><br />
+  <ion-radio-group id="radioGroup" (ionChange) = "unitChange($event.detail.value)">
+    <ion-radio value="Metric" checked>Metric</ion-radio><br />
     <ion-radio value="Standard">Standard</ion-radio><br />
     <ion-radio value="Imperial">Imperial</ion-radio>
   </ion-radio-group>
