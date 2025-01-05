@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, Io
 import { DataService } from '../services/data.service';
 import { MyHttpService } from '../services/my-http.service';
 import { HttpOptions } from '@capacitor/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-weather',
@@ -24,6 +25,8 @@ export class WeatherPage implements OnInit {
   searchResult: any = [];
   description: string = "";
   temperature: string = "";
+  capital: string = "";
+  weatherIconURL: string = "https://openweathermap.org/img/wn/"
 
   constructor(private ds: DataService, private mhs: MyHttpService) { }
 
@@ -35,6 +38,7 @@ export class WeatherPage implements OnInit {
     this.latitude = await this.ds.get("selectedCountryLatitude");
     this.longitude = await this.ds.get("selectedCountryLongitude");
     this.unit = await this.ds.get("Unit");
+    this.capital = await this.ds.get("selectedCountryCapital");
     this.options.url = this.options.url.concat("lat=" + this.latitude + "&lon=" + this.longitude + "&units=" + this.unit + 
       "&appid=" + this.apiKey);
     console.log(this.options.url);
@@ -42,6 +46,10 @@ export class WeatherPage implements OnInit {
     this.searchResult = result.data;
     this.temperature = this.searchResult.main.temp;
     this.description = this.searchResult.weather[0].description;
+    let iconCode: string = this.searchResult.weather[0].icon;
+    this.weatherIconURL = this.weatherIconURL.concat(iconCode + ".png");
+    console.log(this.weatherIconURL);
+    console.log(iconCode);
     console.log(this.description);
     console.log(this.temperature);
   }

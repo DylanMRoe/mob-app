@@ -33,6 +33,7 @@ export class CountriesPage implements OnInit {
     this.options.url = this.options.url.concat(this.searchName);
     let result  = await this.mhs.get(this.options);
     this.searchResult = result.data;
+    console.log(this.options.url);
   }
 
   async selectedCountryNews(selectedCountryCCA2: string){
@@ -40,7 +41,9 @@ export class CountriesPage implements OnInit {
     this.router.navigate(['/news']);
   }
 
-  async selectedCountryWeather(LatLongArray: number[]){
+  async selectedCountryWeather(LatLongArray: number[], capital: string){
+    console.log(capital);
+    await this.ds.set("selectedCountryCapital", capital);
     await this.ds.set("selectedCountryLatitude", LatLongArray[0]);
     await this.ds.set("selectedCountryLongitude", LatLongArray[1]);
     this.router.navigate(['/weather']);
