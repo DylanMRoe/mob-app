@@ -1,20 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton } from '@ionic/angular/standalone';
+import { DataService } from '../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-startup',
   templateUrl: './startup.page.html',
   styleUrls: ['./startup.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class StartupPage implements OnInit {
 
-  constructor() { }
+  constructor(private ds: DataService, private router: Router) { }
 
   ngOnInit() {
+    this.ds.set("Unit", "Metric");
   }
 
+  click(){
+    this.router.navigate(['/home']);
+  }
 }
