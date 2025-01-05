@@ -1,13 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-radio-group value="Metric">
+    <ion-radio value="Metric" (ionSelect) = "unitChange()">Metric</ion-radio><br />
+    <ion-radio value="Standard" (ionSelect) = "unitChange()">Standard</ion-radio><br />
+    <ion-radio value="Imperial"(ionSelect) = "unitChange()">Imperial</ion-radio>
+  </ion-radio-group>
 </ion-content>
