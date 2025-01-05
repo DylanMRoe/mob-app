@@ -39,4 +39,11 @@ export class CountriesPage implements OnInit {
     await this.ds.set("selectedCountryCCA2", selectedCountryCCA2);
     this.router.navigate(['/news']);
   }
+
+  async selectedCountryWeather(LatLongArray: number[]){
+    await this.ds.set("selectedCountryLatitude", LatLongArray[0]);
+    await this.ds.set("selectedCountryLongitude", LatLongArray[1]);
+    this.router.navigate(['/weather']);
+    console.log("Latitude and Longitude: " + LatLongArray[0] + LatLongArray[1]);
+  }
 }
